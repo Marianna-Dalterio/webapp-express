@@ -15,7 +15,7 @@ app.listen(port, () => {
 app.get("/", (req, res) => {
   res.send("Benvenuto nel mio server")
 })
-//rotta index che chiamo con app.metodo ed in cui indico path(URL) e richiamo dal file query
-app.get("/index", query.index);
 
-app.get("/movies/:id", query.show);
+const moviesRouter = require("./routers/movies");
+
+app.use("/movies", moviesRouter);

@@ -1,6 +1,6 @@
 const connection = require("./connection");
 
-//rotta index
+//rotta index (lista film)
 function index(req, res) {
     const sql = `SELECT * FROM movies`
     connection.query(sql, (err, result) => {
@@ -12,15 +12,14 @@ function index(req, res) {
 
 //rotta show (dettagli film + recensioni)
 function show(req, res) {
-    const id = req.params.id
+    const id = req.params.id //prendo id da richiesta browser 
     const sql = `SELECT * FROM movies RIGHT JOIN reviews ON movies.id=reviews.movie_id WHERE movies.id=? `;
 
     connection.query(sql, [id], (err, results) => {
         if (err) return res.status(500).json({ error: "query fallita" })
-        if (results.length === 0) return res.status(400).json({ error: "Film non trovato" });
+        if (results.length === 0) return res.status(400).json({ error: "Film non trovato" }); //metodo connection.query esecuzione query 
         res.json(results)
     })
-
 
 }
 
