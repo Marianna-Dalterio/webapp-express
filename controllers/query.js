@@ -1,4 +1,4 @@
-const connection = require("./connection");
+const connection = require("../database/connection");
 
 //rotta index (lista film)
 function index(req, res) {

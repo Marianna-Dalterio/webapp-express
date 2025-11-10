@@ -1,5 +1,5 @@
 const express = require("express"); //richiedo express
-const query = require("./database/query"); //importo query
+const query = require("./controllers/query"); //importo query
 const app = express(); //creo costante con oggetto express che ha una serie di funzioni come app.get/app.use/app.listen
 const port = 3000; //indico la porta 
 
