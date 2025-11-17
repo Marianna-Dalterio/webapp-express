@@ -13,13 +13,19 @@ function index(req, res) {
 //rotta show (dettagli film + recensioni)
 function show(req, res) {
     const id = req.params.id //prendo id da richiesta browser 
-    const sql = `SELECT * FROM movies RIGHT JOIN reviews ON movies.id=reviews.movie_id WHERE movies.id=? `;
+    const sqlMovies = `SELECT * FROM movies WHERE id=? `;
+    const sqlReviews = `SELECT * FROM reviews WHERE movie_id=?`;
 
-    connection.query(sql, [id], (err, results) => {
-        if (err) return res.status(500).json({ error: "Query fallita" });
-        if (results.length === 0) return res.status(400).json({ error: "Film non trovato" }); //metodo connection.query esecuzione query 
-        res.json(results)
-    })
+    connection.query(sqlMovies, [id], (errMovies, resultsMovies) => {
+        if (errMovies) return res.status(500).json({ error: "Query fallita" });
+        if (resultsMovies.length === 0) return res.status(400).json({ error: "Film non trovato" }); //metodo connection.query esecuzione query 
+
+        connection.query(sqlReviews, [id], (errorReviews, resultsReviews) => {
+            if (errorReviews) return res.status(500).json({ error: "query fallita" });
+            const movieRev = { ...resultsMovies[0], reviews: resultsReviews };
+            res.json(movieRev);
+        });
+    });
 
 }
 
