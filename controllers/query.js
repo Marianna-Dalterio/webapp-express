@@ -4,7 +4,7 @@ const connection = require("../database/connection");
 function index(req, res) {
     const sql = `SELECT * FROM movies`
     connection.query(sql, (err, result) => {
-        if (err) return err.status(500).json({ error: "query fallita" });
+        if (err) return res.status(500).json({ error: "Query fallita" });
         res.json(result)
     });
 
@@ -16,7 +16,7 @@ function show(req, res) {
     const sql = `SELECT * FROM movies RIGHT JOIN reviews ON movies.id=reviews.movie_id WHERE movies.id=? `;
 
     connection.query(sql, [id], (err, results) => {
-        if (err) return res.status(500).json({ error: "query fallita" })
+        if (err) return res.status(500).json({ error: "Query fallita" });
         if (results.length === 0) return res.status(400).json({ error: "Film non trovato" }); //metodo connection.query esecuzione query 
         res.json(results)
     })
