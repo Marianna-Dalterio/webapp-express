@@ -4,6 +4,8 @@ const app = express(); //creo costante con oggetto express che ha una serie di f
 const port = 3000; //indico la porta 
 const moviesRouter = require("./routers/movies");
 const cors = require("cors");
+const NotFound = require("./middlewares/NotFound");
+const ServerError = require("./middlewares/ServerError");
 
 app.use(cors({ origin: "http://localhost:5173" })); //uso CORS policy per permettere a terze parti di utilizzare le risorse collegate a questo server
 
@@ -21,4 +23,10 @@ app.get("/", (req, res) => {
 
 
 app.use("/movies", moviesRouter);
+
+//middleware not found
+app.use(NotFound);
+
+//middleware gestione errori lato server
+app.use(ServerError);
 

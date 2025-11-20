@@ -6,7 +6,8 @@ const connection = mysql.createConnection({
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME
-});  //creo connessione tra server e db per raccogliere dati dal db, createConnection è una funzione con dentro un oggetto contenente coppie chiave valore; passo le credenziali di accesso usando il metodo Process
+});  //creo connessione tra server e db per raccogliere dati dal db, createConnection è una funzione con dentro un oggetto 
+// contenente coppie chiave valore; passo le credenziali di accesso usando il metodo Process
 
 //gestisco eventuale errore di connessione altrimenti mostra messaggio connessione riuscita
 
