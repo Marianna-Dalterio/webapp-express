@@ -3,12 +3,13 @@ const query = require("./controllers/query"); //importo query
 const app = express(); //creo costante con oggetto express che ha una serie di funzioni come app.get/app.use/app.listen
 const port = 3000; //indico la porta 
 const moviesRouter = require("./routers/movies");
+const reviewsRouter = require("./routers/reviews");
 const cors = require("cors");
 const NotFound = require("./middlewares/NotFound");
 const ServerError = require("./middlewares/ServerError");
 
 app.use(cors({ origin: "http://localhost:5173" })); //uso CORS policy per permettere a terze parti di utilizzare le risorse collegate a questo server
-
+app.use(express.json()); //middleware per leggere il corpo delle richieste (form recensioni) (JSON) BODY PARSER
 app.use(express.static("public")); //uso funzione di express per dire leggi i file statici dalla cartella public quindi così come sono, senza essere processati (diverso da assets)
 
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/movies", moviesRouter);
+app.use("/reviews", reviewsRouter);
 
 //middleware not found
 app.use(NotFound);

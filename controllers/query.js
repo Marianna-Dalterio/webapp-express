@@ -29,6 +29,23 @@ function show(req, res) {
 
 }
 
+// 🎯 NUOVA ROTTA: store (gestisce l'aggiunta di una recensione)
+function store(req, res, next) {
+    //prendo i dati dal corpo della richiesta
+    const { name, text, vote, movie_id } = req.body
+    //query sql x inserire la recensione
+    const sql = `INSERT INTO reviews (name, text, vote, movie_id) VALUES (?, ?, ?, ?)`;
+    //eseguo la query
+    connection.query(sql, [name, text, vote, movie_id], (err, result) => {
+        if (err) return next(err);
+        res.status(201).json({
+            message: "Recensione aggiunta con successo",
+            review_id: result.insertId, // <-- Qui prendi l'ID generato dal DB
+            data: req.body
+        });
+    });
+}
 
 
-module.exports = { index, show }
+
+module.exports = { index, show, store }

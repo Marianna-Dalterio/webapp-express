@@ -8,4 +8,7 @@ router.get("/", query.index);
 
 router.get("/:id", query.show);
 
+
+
+
 module.exports = router;
